@@ -9,6 +9,7 @@ public class PotObjectData : IEntity
         Id = id;
         Name = name;
         _healthPoint = healthPoint;
+        OnHealthPointChange = new UnityEvent<int, int>();
     }
 
     public long Id { get; }
