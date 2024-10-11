@@ -1,16 +1,23 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class MovePlayer1 : MonoBehaviour
 {
     private Rigidbody rb;
+    Transform child;
+    GameObject childObject;
+    public float rotationSpeed = 10f; // 회전 속도
 
     public float power = 10000f;
     public float maxSpeed = 8.0f;
+    public float duration = 3f;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        child = transform.GetChild(0); ;
+        childObject = child.gameObject;
     }
 
     /// <summary>
@@ -24,26 +31,34 @@ public class MovePlayer1 : MonoBehaviour
         // 키 입력 처리
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            moveHorizontal = -1;
+            moveHorizontal = -1; // 왼쪽 이동
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            moveHorizontal = 1;
+            moveHorizontal = 1; // 오른쪽 이동
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            moveVertical = 1;
+            moveVertical = 1; // 위쪽 이동
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            moveVertical = -1;
+            moveVertical = -1; // 아래쪽 이동
         }
 
         // 방향 벡터 계산
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical).normalized;
 
+        // 이동 방향으로 회전
+        if (movement != Vector3.zero)
+        {
+            // 이동 방향으로 회전하고 Y축 기준으로 90도 회전
+            Quaternion targetRotation = Quaternion.LookRotation(movement) * Quaternion.Euler(0, 90, 0);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // 부드러운 회전
+        }
+
         // 힘을 적용
-        rb.AddForce(movement * power * Time.deltaTime);
+        rb.AddForce(movement * power * Time.deltaTime, ForceMode.Force);
 
         // 최대 속도 제한
         if (rb.velocity.magnitude > maxSpeed)
