@@ -38,7 +38,7 @@ public class MovePlayer1 : MonoBehaviour
             Transform childTransform = transform.GetChild(0); // 첫 번째 자식 오브젝트
 
             // 이동 방향을 기준으로 부모 축을 따라 회전
-            Quaternion targetRotation = Quaternion.LookRotation(movement); // 이동 방향으로 회전
+            Quaternion targetRotation = Quaternion.LookRotation(movement) * Quaternion.Euler(0, 90, 0); // 이동 방향으로 회전
 
             // 부모의 Y축을 기준으로 회전 조정
             childTransform.rotation = Quaternion.Slerp(childTransform.rotation, targetRotation, Time.deltaTime * 10f); // 부드러운 회전
