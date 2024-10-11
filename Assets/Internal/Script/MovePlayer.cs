@@ -50,30 +50,4 @@ public class MovePlayer : MonoBehaviour
             }
         }
     }
-
-    void OnCollisionStay2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("panel"))
-        {
-            Collider2D otherCollider = other.collider; // 충돌한 오브젝트의 콜라이더 가져오기
-            Collider2D thisCollider = GetComponent<Collider2D>(); // 이 오브젝트의 콜라이더 가져오기
-
-            // 특정 키를 누를 때만 충돌을 무시
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                Physics2D.IgnoreCollision(otherCollider, thisCollider, true); // 충돌 무시
-            }
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("panel"))
-        {
-            Collider2D otherCollider = other.collider;
-            Collider2D thisCollider = GetComponent<Collider2D>();
-
-            Physics2D.IgnoreCollision(otherCollider, thisCollider, false); // 충돌 다시 활성화
-        }
-    }
 }
