@@ -53,9 +53,11 @@ public class MovePlayer2 : MonoBehaviour
         rb.AddForce(movement * PlayerState.power * Time.deltaTime, ForceMode.Force);
 
         // 최대 속도 제한
+        float slowdownRate = 0.97f; // 감속 비율
+
         if (rb.velocity.magnitude > PlayerState.maxSpeed)
         {
-            rb.velocity = rb.velocity.normalized * PlayerState.maxSpeed;
+            rb.velocity *= slowdownRate;
         }
     }
 }

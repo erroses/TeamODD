@@ -7,7 +7,7 @@ public class AttackCollision : MonoBehaviour
     Transform parent;
     GameObject parentObject;
 
-    public float power = 7f;
+    public float power = 50f;
 
     private void Start()
     {
@@ -49,11 +49,7 @@ public class AttackCollision : MonoBehaviour
             Rigidbody otherRb = other.gameObject.GetComponent<Rigidbody>();
 
             // 상대에게 넉백 효과 적용
-
-            PlayerState playerState = otherRb.GetComponent<PlayerState>();
-            playerState.maxSpeed = 1000f;
             otherRb.AddForce(KnockBackVelocity, ForceMode.Impulse);
-            StartCoroutine(ResetMaxSpeed(playerState, 0.5f));
         }
     }
 
@@ -80,10 +76,5 @@ public class AttackCollision : MonoBehaviour
                 }
             }
         }
-    }
-    IEnumerator ResetMaxSpeed(PlayerState playerState, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        playerState.maxSpeed = 25f;
     }
 }
