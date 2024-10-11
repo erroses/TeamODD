@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 
 public class AttackCollision : MonoBehaviour
@@ -19,7 +19,7 @@ public class AttackCollision : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        // ÇÃ·¹ÀÌ¾î¿Í ºÎµúÇûÀ» °æ¿ì
+        // í”Œë ˆì´ì–´ì™€ ë¶€ë”ªí˜”ì„ ê²½ìš°
         if (other.gameObject.CompareTag("player") && other.gameObject != parentObject)
         {
             Vector3 KnockBackVelocity = Vector3.zero;
@@ -28,7 +28,7 @@ public class AttackCollision : MonoBehaviour
             {
                 if (parent.position.z > other.transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(-power, 0f, -power); // °ª Áõ°¡
+                    KnockBackVelocity = new Vector3(-power, 0f, -power); // ê°’ ì¦ê°€
                 }
                 else
                 {
@@ -39,7 +39,7 @@ public class AttackCollision : MonoBehaviour
             {
                 if (parent.position.z > other.transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(power, 0f, -power); // °ª Áõ°¡
+                    KnockBackVelocity = new Vector3(power, 0f, -power); // ê°’ ì¦ê°€
                 }
                 else
                 {
@@ -49,14 +49,14 @@ public class AttackCollision : MonoBehaviour
 
             Rigidbody otherRb = other.gameObject.GetComponent<Rigidbody>();
 
-            // »ó´ë¿¡°Ô ³Ë¹é È¿°ú Àû¿ë
+            // ìƒëŒ€ì—ê²Œ ë„‰ë°± íš¨ê³¼ ì ìš©
             otherRb.AddForce(KnockBackVelocity, ForceMode.Impulse);
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        // Ç×¾Æ¸®¿Í ºÎµúÇûÀ» °æ¿ì
+        // í•­ì•„ë¦¬ì™€ ë¶€ë”ªí˜”ì„ ê²½ìš°
         if (other.gameObject.CompareTag("jar"))
         {
             JarState jarState = other.gameObject.GetComponent<JarState>();
