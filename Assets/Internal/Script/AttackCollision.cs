@@ -5,6 +5,10 @@ public class AttackCollision : MonoBehaviour
 {
     private PlayerData playerData1 = new PlayerData(1, "Player1");
     private PlayerData playerData2 = new PlayerData(2, "Player2");
+
+    public AudioClip playerAttack; // 재생할 오디오 클립: 항아리 파손
+    private AudioSource audioSource; // AudioSource 컴포넌트
+
     private Rigidbody rb;
     private Transform parent;
     private GameObject parentObject;
@@ -17,6 +21,9 @@ public class AttackCollision : MonoBehaviour
         parent = transform.parent;
         parent = parent.parent;
         parentObject = parent.gameObject;
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
     void OnTriggerStay(Collider other)
@@ -40,6 +47,9 @@ public class AttackCollision : MonoBehaviour
 
             // 상대에게 넉백 효과 적용
             otherRb.AddForce(KnockBackVelocity, ForceMode.Impulse);
+
+            audioSource.clip = playerAttack;
+            audioSource.Play();
         }
     }
 

@@ -15,6 +15,7 @@ public class JarState : MonoBehaviour
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         currentHealth = maxHealth;
+        audioSource.playOnAwake = false;
     }
 
     public void ChangeColor(bool isRepair)

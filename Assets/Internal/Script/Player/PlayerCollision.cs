@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
+    public AudioClip jarDamage; // 재생할 오디오 클립: 플레이어 타격
     private Rigidbody rb;
     public float power = 5f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
     }
     void OnCollisionStay(Collision other)
     {
