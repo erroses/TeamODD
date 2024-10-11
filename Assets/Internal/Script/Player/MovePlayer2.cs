@@ -4,13 +4,12 @@ using UnityEngine;
 public class MovePlayer2 : MonoBehaviour
 {
     private Rigidbody rb;
-
-    public float power = 10000f;
-    public float maxSpeed = 25.0f;
+    PlayerState PlayerState;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        PlayerState = this.GetComponent<PlayerState>();
     }
 
     /// <summary>
@@ -51,12 +50,12 @@ public class MovePlayer2 : MonoBehaviour
         }
 
         // 힘을 적용
-        rb.AddForce(movement * power * Time.deltaTime, ForceMode.Force);
+        rb.AddForce(movement * PlayerState.power * Time.deltaTime, ForceMode.Force);
 
         // 최대 속도 제한
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > PlayerState.maxSpeed)
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            rb.velocity = rb.velocity.normalized * PlayerState.maxSpeed;
         }
     }
 }
