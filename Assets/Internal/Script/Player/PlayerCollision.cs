@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     private Rigidbody rb;
+    public float power = 5f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -18,22 +19,22 @@ public class PlayerCollision : MonoBehaviour
             {
                 if (other.gameObject.transform.position.z > transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(-5f, 0f, -5f); // 값 증가
+                    KnockBackVelocity = new Vector3(-power, 0f, -power); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(-5f, 0f, 5f);
+                    KnockBackVelocity = new Vector3(-power, 0f, power);
                 }
             }
             else
             {
                 if (other.gameObject.transform.position.z > transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(5f, 0f, -5f); // 값 증가
+                    KnockBackVelocity = new Vector3(power, 0f, -power); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(5f, 0f, 5f);
+                    KnockBackVelocity = new Vector3(power, 0f, power);
                 }
             }
 

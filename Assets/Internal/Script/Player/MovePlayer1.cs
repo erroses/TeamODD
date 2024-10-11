@@ -1,23 +1,16 @@
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class MovePlayer1 : MonoBehaviour
 {
     private Rigidbody rb;
-    Transform child;
-    GameObject childObject;
-    public float rotationSpeed = 10f; // 회전 속도
 
     public float power = 10000f;
-    public float maxSpeed = 8.0f;
-    public float duration = 3f;
+    public float maxSpeed = 25.0f;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        child = transform.GetChild(0); ;
-        childObject = child.gameObject;
     }
 
     /// <summary>

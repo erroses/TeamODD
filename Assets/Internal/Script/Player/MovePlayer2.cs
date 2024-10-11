@@ -6,7 +6,7 @@ public class MovePlayer2 : MonoBehaviour
     private Rigidbody rb;
 
     public float power = 10000f;
-    public float maxSpeed = 8.0f;
+    public float maxSpeed = 25.0f;
 
     private void Start()
     {
@@ -51,7 +51,7 @@ public class MovePlayer2 : MonoBehaviour
         }
 
         // 힘을 적용
-        rb.AddForce(movement * power * Time.deltaTime);
+        rb.AddForce(movement * power * Time.deltaTime, ForceMode.Force);
 
         // 최대 속도 제한
         if (rb.velocity.magnitude > maxSpeed)

@@ -6,6 +6,8 @@ public class AttackCollision : MonoBehaviour
     Transform parent;
     GameObject parentObject;
 
+    public float power = 7f;
+
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -24,22 +26,22 @@ public class AttackCollision : MonoBehaviour
             {
                 if (parent.position.z > other.transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(-7f, 0f, -7f); // 값 증가
+                    KnockBackVelocity = new Vector3(-power, 0f, -power); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(-7f, 0f, 7f);
+                    KnockBackVelocity = new Vector3(-power, 0f, power);
                 }
             }
             else
             {
                 if (parent.position.z > other.transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(7f, 0f, -7f); // 값 증가
+                    KnockBackVelocity = new Vector3(power, 0f, -power); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(7f, 0f, 7f);
+                    KnockBackVelocity = new Vector3(power, 0f, power);
                 }
             }
 
