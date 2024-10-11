@@ -24,22 +24,22 @@ public class AttackCollision : MonoBehaviour
             {
                 if (parent.position.z > other.transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(-7f, 2f, -7f); // 값 증가
+                    KnockBackVelocity = new Vector3(-7f, 0f, -7f); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(-7f, 2f, 7f);
+                    KnockBackVelocity = new Vector3(-7f, 0f, 7f);
                 }
             }
             else
             {
                 if (parent.position.z > other.transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(7f, 2f, -7f); // 값 증가
+                    KnockBackVelocity = new Vector3(7f, 0f, -7f); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(7f, 2f, 7f);
+                    KnockBackVelocity = new Vector3(7f, 0f, 7f);
                 }
             }
 

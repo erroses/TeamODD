@@ -18,22 +18,22 @@ public class PlayerCollision : MonoBehaviour
             {
                 if (other.gameObject.transform.position.z > transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(-5f, 2f, -5f); // 값 증가
+                    KnockBackVelocity = new Vector3(-5f, 0f, -5f); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(-5f, 2f, 5f);
+                    KnockBackVelocity = new Vector3(-5f, 0f, 5f);
                 }
             }
             else
             {
                 if (other.gameObject.transform.position.z > transform.position.z)
                 {
-                    KnockBackVelocity = new Vector3(5f, 2f, -5f); // 값 증가
+                    KnockBackVelocity = new Vector3(5f, 0f, -5f); // 값 증가
                 }
                 else
                 {
-                    KnockBackVelocity = new Vector3(5f, 2f, 5f);
+                    KnockBackVelocity = new Vector3(5f, 0f, 5f);
                 }
             }
 
