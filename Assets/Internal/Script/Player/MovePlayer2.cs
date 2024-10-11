@@ -46,7 +46,7 @@ public class MovePlayer2 : MonoBehaviour
         if (movement != Vector3.zero)
         {
             // 이동 방향으로 회전하고 Y축 기준으로 90도 회전
-            Quaternion targetRotation = Quaternion.LookRotation(movement) * Quaternion.Euler(0, 90, 0);
+            Quaternion targetRotation = Quaternion.LookRotation(movement) * Quaternion.Euler(0, 270, 0);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // 부드러운 회전
         }
 

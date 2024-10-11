@@ -48,7 +48,30 @@ public class AttackCollision : MonoBehaviour
             // 상대에게 넉백 효과 적용
             otherRb.AddForce(KnockBackVelocity, ForceMode.Impulse);
         }
+    }
 
+    void OnTriggerEnter(Collider other)
+    {
         // 항아리와 부딪혔을 경우
+        if (other.gameObject.CompareTag("jar"))
+        {
+            JarState jarState = other.gameObject.GetComponent<JarState>();
+            if (parentObject.name == "Player1")
+            {
+                if (jarState.currentHealth < jarState.maxHealth)
+                {
+                    jarState.currentHealth++;
+                    jarState.ChangeColor();
+                }
+            }
+            else
+            {
+                if (jarState.currentHealth > 0)
+                {
+                    jarState.currentHealth--;
+                    jarState.ChangeColor();
+                }
+            }
+        }
     }
 }
