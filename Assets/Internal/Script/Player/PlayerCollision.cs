@@ -24,7 +24,6 @@ public class PlayerCollision : MonoBehaviour
 
             // 넉백 효과 적용
             rb.AddForce(KnockBackVelocity, ForceMode.Impulse);
-
         }
     }
 }
