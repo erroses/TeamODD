@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MovePlayer1 : MonoBehaviour
+public class MovePlayer2 : MonoBehaviour
 {
     private Rigidbody rb;
 
@@ -22,19 +22,19 @@ public class MovePlayer1 : MonoBehaviour
         float moveVertical = 0;
 
         // 키 입력 처리
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             moveHorizontal = -1;
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             moveHorizontal = 1;
         }
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.W))
         {
             moveVertical = 1;
         }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S))
         {
             moveVertical = -1;
         }
