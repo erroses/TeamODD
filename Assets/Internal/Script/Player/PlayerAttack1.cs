@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerAttack1 : MonoBehaviour
 {
+    PlayerData playerData = new PlayerData(1, "Player1");
     Transform child;
     GameObject childObject;
 
@@ -13,6 +14,11 @@ public class PlayerAttack1 : MonoBehaviour
     {
         child = transform.GetChild(0);
         childObject = child.gameObject;
+
+        playerData.OnAttackCountIncrease.AddListener(count =>
+        {
+            StartCoroutine(attackObject());
+        });
     }
 
     // 추후 공격 시간 제한 지정
@@ -22,7 +28,7 @@ public class PlayerAttack1 : MonoBehaviour
         if (Input.GetKey(KeyCode.P) && canAttack)
         {
             // 공격 범위 켜기
-            StartCoroutine(attackObject());
+            playerData.AttackCount++;
         }
     }
 

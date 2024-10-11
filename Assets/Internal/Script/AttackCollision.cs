@@ -3,6 +3,8 @@ using System.Collections;
 
 public class AttackCollision : MonoBehaviour
 {
+    PlayerData playerData1 = new PlayerData(1, "Player1");
+    PlayerData playerData2 = new PlayerData(2, "Player2");
     private Rigidbody rb;
     Transform parent;
     GameObject parentObject;
@@ -22,30 +24,17 @@ public class AttackCollision : MonoBehaviour
         // 플레이어와 부딪혔을 경우
         if (other.gameObject.CompareTag("player") && other.gameObject != parentObject)
         {
+            if(other.gameObject.name == "Player1") { playerData1.DamageCount++; }
+            else { playerData2.DamageCount++; }
+
             Vector3 KnockBackVelocity = Vector3.zero;
 
-            if (parent.position.x > other.transform.position.x)
-            {
-                if (parent.position.z > other.transform.position.z)
-                {
-                    KnockBackVelocity = new Vector3(-power, 0f, -power); // 값 증가
-                }
-                else
-                {
-                    KnockBackVelocity = new Vector3(-power, 0f, power);
-                }
-            }
-            else
-            {
-                if (parent.position.z > other.transform.position.z)
-                {
-                    KnockBackVelocity = new Vector3(power, 0f, -power); // 값 증가
-                }
-                else
-                {
-                    KnockBackVelocity = new Vector3(power, 0f, power);
-                }
-            }
+            // 상대방과 부모 오브젝트의 위치를 비교하여 넉백 방향 결정
+            float xDirection = parent.position.x > other.transform.position.x ? -power : power;
+            float zDirection = parent.position.z > other.transform.position.z ? -power : power;
+
+            // 넉백 벡터 설정
+            KnockBackVelocity = new Vector3(xDirection, 0f, zDirection);
 
             Rigidbody otherRb = other.gameObject.GetComponent<Rigidbody>();
 
@@ -66,6 +55,11 @@ public class AttackCollision : MonoBehaviour
                 {
                     jarState.currentHealth++;
                     jarState.ChangeColor();
+
+                    if(jarState.currentHealth == jarState.maxHealth)
+                    {
+                        playerData1.DestroyCount++;
+                    }
                 }
             }
             else
@@ -74,6 +68,11 @@ public class AttackCollision : MonoBehaviour
                 {
                     jarState.currentHealth--;
                     jarState.ChangeColor();
+
+                    if (jarState.currentHealth == 0)
+                    {
+                        playerData2.DestroyCount++;
+                    }
                 }
             }
         }
