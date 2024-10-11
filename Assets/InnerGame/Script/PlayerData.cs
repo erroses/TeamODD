@@ -10,9 +10,9 @@ public class PlayerData : IEntity
     {
         Id = id;
         Name = name;
-        DamageCount = 0;
-        AttackCount = 0;
-        DestroyCount = 0;
+        _damageCount = 0;
+        _attackCount = 0;
+        _destroyCount = 0;
         OnDamageCountIncrease = new UnityEvent<int>();
         OnAttackCountIncrease = new UnityEvent<int>();
         OnDestroyCountIncrease = new UnityEvent<int>();
