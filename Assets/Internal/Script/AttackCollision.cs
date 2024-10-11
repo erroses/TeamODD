@@ -13,6 +13,7 @@ public class AttackCollision : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody>();
         parent = transform.parent;
+        parent = parent.parent;
         parentObject = parent.gameObject;
     }
 
