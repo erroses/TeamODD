@@ -1,10 +1,10 @@
 using UnityEngine.Events;
 
-public class PotObjectData : IEntity
+public class JarObjectData : IEntity
 {
     private int _healthPoint;
 
-    public PotObjectData(long id, string name, int healthPoint)
+    public JarObjectData(long id, string name, int healthPoint)
     {
         Id = id;
         Name = name;
