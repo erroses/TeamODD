@@ -3,11 +3,11 @@ using System.Collections;
 
 public class AttackCollision : MonoBehaviour
 {
-    PlayerData playerData1 = new PlayerData(1, "Player1");
-    PlayerData playerData2 = new PlayerData(2, "Player2");
+    private PlayerData playerData1 = new PlayerData(1, "Player1");
+    private PlayerData playerData2 = new PlayerData(2, "Player2");
     private Rigidbody rb;
-    Transform parent;
-    GameObject parentObject;
+    private Transform parent;
+    private GameObject parentObject;
 
     public float power = 50f;
 
@@ -54,7 +54,7 @@ public class AttackCollision : MonoBehaviour
                 if (jarState.currentHealth < jarState.maxHealth)
                 {
                     jarState.currentHealth++;
-                    jarState.ChangeColor();
+                    jarState.ChangeColor(true);
 
                     if(jarState.currentHealth == jarState.maxHealth)
                     {
@@ -67,7 +67,7 @@ public class AttackCollision : MonoBehaviour
                 if (jarState.currentHealth > 0)
                 {
                     jarState.currentHealth--;
-                    jarState.ChangeColor();
+                    jarState.ChangeColor(false);
 
                     if (jarState.currentHealth == 0)
                     {

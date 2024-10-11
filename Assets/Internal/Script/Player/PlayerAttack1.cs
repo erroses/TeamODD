@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerAttack1 : MonoBehaviour
 {
     PlayerData playerData = new PlayerData(1, "Player1");
+
     Transform child;
     GameObject childObject;
 
