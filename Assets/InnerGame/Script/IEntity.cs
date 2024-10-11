@@ -1,4 +1,4 @@
-﻿public interface IEntity
+public interface IEntity
 {
     public abstract long Id { get; }
 
