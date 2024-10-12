@@ -2,41 +2,70 @@ using UnityEngine;
 
 public class JarState : MonoBehaviour
 {
-    public Material[] material = new Material[4]; // ÀÌ¹ÌÁö·Î ´ëÃ¼
+    public Material[] material = new Material[4]; // ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
+    [SerializeField]
+    private GameObject[] models = new GameObject[4];
 
-    private AudioSource audioSource; // AudioSource ÄÄÆ÷³ÍÆ®
-    public AudioClip jarRepair; // Àç»ýÇÒ ¿Àµð¿À Å¬¸³: Ç×¾Æ¸® ¼ö¸®
-    public AudioClip jarDamage; // Àç»ýÇÒ ¿Àµð¿À Å¬¸³: Ç×¾Æ¸® ¼Õ»ó
-    public AudioClip jarCrash; // Àç»ýÇÒ ¿Àµð¿À Å¬¸³: Ç×¾Æ¸® ÆÄ¼Õ
+    private AudioSource audioSource; // AudioSource ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+    public AudioClip jarRepair; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½: ï¿½×¾Æ¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public AudioClip jarDamage; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½: ï¿½×¾Æ¸ï¿½ ï¿½Õ»ï¿½
+    public AudioClip jarCrash; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½: ï¿½×¾Æ¸ï¿½ ï¿½Ä¼ï¿½
 
     public int maxHealth = 3;
     public int currentHealth;
+
+    public int health;
+
+    private void Awake()
+    {
+        // for (int i = 0; i < models.Length; i++)
+        // {
+        //     models[i] = transform.GetChild(i).gameObject;
+        // }
+        UpdateModel(currentHealth);
+    }
+
     private void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
 
-        currentHealth = maxHealth;
+        // currentHealth = maxHealth;
+        SetHealthPoint(maxHealth);
+    }
+
+    public void SetHealthPoint(int healthPoint)
+    {
+        currentHealth = healthPoint;
+        UpdateModel(healthPoint);
+    }
+
+    public void UpdateModel(int healthPoint)
+    {
+        for (int i = 0; i < models.Length; i++)
+        {
+            models[i].SetActive(i == healthPoint);
+        }
     }
 
     /// <summary>
-    /// Ç×¾Æ¸® »óÅÂ¿¡ µû¶ó »ö º¯°æ ¹× ¼Ò¸® Àç»ý
+    /// ï¿½×¾Æ¸ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="isRepair"></param>
     public void UpdateJarState(bool isRepair)
     {
-        // Renderer ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
-        Renderer renderer = GetComponent<Renderer>();
-        renderer.material = material[currentHealth];
+        // Renderer ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
+        // Renderer renderer = GetComponent<Renderer>();
+        // renderer.material = material[currentHealth];
 
         switch (currentHealth)
         {
             case 0: audioSource.clip = jarCrash; break;
             case 1:
-            case 2: if (!isRepair) { audioSource.clip = jarDamage; } break; // ºÎºÐÆÄ¼Õ ¶Ç´Â ¼ö¸® È¿°úÀ½ ±¸ºÐ
+            case 2: if (!isRepair) { audioSource.clip = jarDamage; } break; // ï¿½Îºï¿½ï¿½Ä¼ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
-        if(isRepair) { audioSource.clip = jarRepair; }
+        if (isRepair) { audioSource.clip = jarRepair; }
 
         audioSource.Play();
     }

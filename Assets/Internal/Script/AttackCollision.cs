@@ -65,10 +65,11 @@ public class AttackCollision : MonoBehaviour
             int previousHealth = jarState.currentHealth;
 
             // 체력 최대최소 범위 지정(그 안에서만)
-            jarState.currentHealth = Mathf.Clamp(jarState.currentHealth + healthChange, 0, jarState.maxHealth);
+            // jarState.currentHealth = Mathf.Clamp(jarState.currentHealth + healthChange, 0, jarState.maxHealth);
+            jarState.SetHealthPoint(Mathf.Clamp(jarState.currentHealth + healthChange, 0, jarState.maxHealth));
 
             // 체력이 변했을 경우
-            if(jarState.currentHealth != previousHealth)
+            if (jarState.currentHealth != previousHealth)
             {
                 jarState.UpdateJarState(isRepair);
 
