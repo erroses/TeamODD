@@ -9,6 +9,11 @@ public class SelectButton : MonoBehaviour
         SceneManager.LoadScene("Internal");
     }
 
+    public void SelectMain()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void SelectOption()
     {
         Option.SetActive(true);
