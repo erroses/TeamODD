@@ -1,24 +1,32 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
     private AudioSource audioSource;
     public AudioClip clip;
-
-    private bool isPaused = false;
-
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                Debug.LogError("AudioManager instance is null. Make sure it is in the scene.");
+            }
+            return instance;
+        }
+    }
     private void Awake()
     {
         // Singleton pattern
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // ÀÌ ¿ÀºêÁ§Æ®¸¦ ¾À ÀüÈ¯ ½Ã ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            DontDestroyOnLoad(gameObject); // ì´ ì˜¤ë¸Œì íŠ¸ë¥¼ ì”¬ ì „í™˜ ì‹œ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
         }
         else
         {
-            Destroy(gameObject); // ÀÌ¹Ì Á¸ÀçÇÏ´Â ÀÎ½ºÅÏ½º°¡ ÀÖÀ» °æ¿ì ÇöÀç ¿ÀºêÁ§Æ®¸¦ ÆÄ±«
+            Destroy(gameObject); // ì´ë¯¸ ì¡´ì¬í•˜ëŠ” ì¸ìŠ¤í„´ìŠ¤ê°€ ìˆì„ ê²½ìš° í˜„ì¬ ì˜¤ë¸Œì íŠ¸ë¥¼ íŒŒê´´
         }
     }
 
@@ -27,20 +35,12 @@ public class AudioManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         audioSource.clip = this.clip;
-        audioSource.loop = true; // ¹İº¹ Àç»ı ¼³Á¤
-        audioSource.Play(); // Áö¼ÓÀûÀ¸·Î Àç»ı
+        audioSource.loop = true; // ë°˜ë³µ ì¬ìƒ ì„¤ì •
+        audioSource.Play(); // ì§€ì†ì ìœ¼ë¡œ ì¬ìƒ
     }
 
-    private void Update()
+    public void AudioPause(bool isPaused)
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            // ½Ã°£ ½ºÄÉÀÏ°ú ¿Àµğ¿À ÇÇÄ¡¸¦ ÀÏ½ÃÁ¤Áö »óÅÂ¿¡ µû¶ó ¼³Á¤ÇÕ´Ï´Ù.
-            Time.timeScale = isPaused ? 0f : 1f;
-            audioSource.pitch = isPaused ? 0f : 1f; // ¹è°æÀ½¾Ç ¸ØÃã ¶Ç´Â Àç°³
-
-            // °ÔÀÓÀÇ ÀÏ½ÃÁ¤Áö »óÅÂ¸¦ ÀüÈ¯ÇÕ´Ï´Ù.
-            isPaused = !isPaused;
-        }
+        audioSource.pitch = isPaused ? 0f : 1f;
     }
 }
