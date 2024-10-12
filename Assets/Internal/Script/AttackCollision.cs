@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class AttackCollision : MonoBehaviour
 {
-    private PlayerData playerData1 = new PlayerData(1, "Player1");
-    private PlayerData playerData2 = new PlayerData(2, "Player2");
+    private PlayerData[] playerData = new PlayerData[2];
 
-    private Rigidbody rb;
     private Transform parent;
     private GameObject parentObject;
 
@@ -14,19 +11,24 @@ public class AttackCollision : MonoBehaviour
 
     private void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
         parent = transform.parent;
         parent = parent.parent;
         parentObject = parent.gameObject;
+
+        // 플레이어 데이터 초기화
+        for (int i = 0; i < 2; i++)
+        {
+            playerData[i] = new PlayerData(i + 1, $"Player{i + 1}");
+        }
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         // 플레이어와 부딪혔을 경우
         if (other.gameObject.CompareTag("player") && other.gameObject != parentObject)
         {
-            if(other.gameObject.name == "Player1") { playerData1.DamageCount++; }
-            else { playerData2.DamageCount++; }
+            int playerIndex = transform.name.Equals("Player1") ? 0 : 1; // 이름에 따라 인덱스 결정
+            playerData[playerIndex].DamageCount++;
 
             Vector3 KnockBackVelocity = Vector3.zero;
 
@@ -44,7 +46,7 @@ public class AttackCollision : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("player") && other.gameObject != parentObject)
         {
@@ -52,35 +54,26 @@ public class AttackCollision : MonoBehaviour
             playerSound.audioSound();
         }
 
-            // 항아리와 부딪혔을 경우
-            if (other.gameObject.CompareTag("jar"))
+        // 항아리와 부딪혔을 경우
+        if (other.gameObject.CompareTag("jar"))
         {
             JarState jarState = other.gameObject.GetComponent<JarState>();
-            if (parentObject.name == "Player1")
-            {
-                if (jarState.currentHealth < jarState.maxHealth)
-                {
-                    jarState.currentHealth++;
-                    jarState.ChangeColor(true);
 
-                    if(jarState.currentHealth == jarState.maxHealth)
-                    {
-                        playerData1.DestroyCount++;
-                    }
-                }
-            }
-            else
-            {
-                if (jarState.currentHealth > 0)
-                {
-                    jarState.currentHealth--;
-                    jarState.ChangeColor(false);
+            int playerIndex = parent.name.Equals("Player1") ? 0 : 1; // 이름에 따라 인덱스 결정
+            bool isRepair = parent.name.Equals("Player1"); // 수리 여부 결정
+            int healthChange = isRepair ? 1 : -1;
+            int previousHealth = jarState.currentHealth;
 
-                    if (jarState.currentHealth == 0)
-                    {
-                        playerData2.DestroyCount++;
-                    }
-                }
+            // 체력 최대최소 범위 지정(그 안에서만)
+            jarState.currentHealth = Mathf.Clamp(jarState.currentHealth + healthChange, 0, jarState.maxHealth);
+
+            // 체력이 변했을 경우
+            if(jarState.currentHealth != previousHealth)
+            {
+                jarState.UpdateJarState(isRepair);
+
+                if (jarState.currentHealth == jarState.maxHealth) { playerData[0].DestroyCount++; }
+                if (jarState.currentHealth == 0) { playerData[1].DestroyCount++; }
             }
         }
     }

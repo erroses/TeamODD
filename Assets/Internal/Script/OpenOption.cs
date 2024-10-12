@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OpenOption : MonoBehaviour
@@ -12,18 +10,8 @@ public class OpenOption : MonoBehaviour
         // ESC 키를 눌렀을 때
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
-            {
-                // 게임을 재개
-                Time.timeScale = 1f;
-                isPaused = false;
-            }
-            else
-            {
-                // 게임을 멈춤
-                Time.timeScale = 0f;
-                isPaused = true;
-            }
+            Time.timeScale = isPaused ? 1f : 0f; // 게임을 재개하거나 멈춤
+            isPaused = !isPaused; // 일시 정지 상태를 토글
         }
     }
 }
