@@ -3,14 +3,25 @@ using UnityEngine.SceneManagement;
 
 public class SelectButton : MonoBehaviour
 {
+    public GameObject Option;
     public void SelectStart()
     {
         SceneManager.LoadScene("Internal");
     }
 
+    public void SelectMain()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void SelectOption()
     {
-        // 옵션 띄우기
+        Option.SetActive(true);
+    }
+
+    public void SelectBack()
+    {
+        Option.SetActive(false);
     }
 
     public void SelectExit()
