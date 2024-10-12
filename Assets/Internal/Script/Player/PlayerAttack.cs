@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
 
     public float attackCooldown = 0.3f; // 공격 쿨타임 (N초)
     public bool canAttack = true; // 공격 가능 여부
-    void Start()
+    private void Start()
     {
         child = transform.GetChild(0);
         childObject = child.gameObject;
@@ -37,7 +37,7 @@ public class PlayerAttack : MonoBehaviour
     /// <summary>
     /// 플레이어의 공격 입력 처리
     /// </summary>
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(keyMappings[transform.name]) && canAttack)
         {

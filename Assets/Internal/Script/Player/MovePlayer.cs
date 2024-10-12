@@ -5,16 +5,17 @@ using UnityEngine;
 public class MovePlayer : MonoBehaviour
 {
     private Rigidbody rb;
-    private PlayerState PlayerState;
     private Transform child;
 
     private Dictionary<string, KeyCode[]> keyMappings;
     private Dictionary<string, float> rotationMappings;
 
+    public float power = 10000f;
+    public float maxSpeed = 25.0f;
+
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-        PlayerState = this.GetComponent<PlayerState>();
         child = transform.GetChild(0);
 
         // 키 매핑
@@ -61,10 +62,10 @@ public class MovePlayer : MonoBehaviour
         }
 
         // 힘을 적용
-        rb.AddForce(movement * PlayerState.power * Time.deltaTime, ForceMode.Force);
+        rb.AddForce(movement * power * Time.deltaTime, ForceMode.Force);
 
         // 최대 속도 제한
         float slowdownRate = 0.97f; // 감속 비율
-        if (rb.velocity.magnitude > PlayerState.maxSpeed) { rb.velocity *= slowdownRate; }
+        if (rb.velocity.magnitude > maxSpeed) { rb.velocity *= slowdownRate; }
     }
 }
