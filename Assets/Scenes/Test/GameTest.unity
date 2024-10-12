@@ -2864,6 +2864,8 @@ MonoBehaviour:
   jarObjectPrefab: {fileID: 154690518643811096, guid: 9e793ebc529eab14192d28904a773183, type: 3}
   player1Prefab: {fileID: 3607823029164097262, guid: 66b470ba21c881c4eb4b58c0aa69e734, type: 3}
   player2Prefab: {fileID: 7449248978523621373, guid: f00abbc792c114645879319defe213b3, type: 3}
+  player1Object: {fileID: 0}
+  player2Object: {fileID: 0}
   audioManager: {fileID: 0}
   jarObjectCount: 16
   regionRadius: 70
