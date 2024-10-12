@@ -10,6 +10,7 @@ public class BackgroundMusicManager : MonoBehaviour
     private void Start()
     {
         audioManager = AudioManager.Instance;
+        audioManager.AudioPause(false);
     }
     private void Update()
     {

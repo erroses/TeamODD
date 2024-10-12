@@ -6,7 +6,7 @@ public class SelectButton : MonoBehaviour
     public GameObject Option;
     public void SelectStart()
     {
-        SceneManager.LoadScene("Internal");
+        SceneManager.LoadScene("GameTest");
     }
 
     public void SelectMain()
