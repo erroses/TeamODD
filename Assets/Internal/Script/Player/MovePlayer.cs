@@ -36,7 +36,7 @@ public class MovePlayer : MonoBehaviour
     /// <summary>
     /// �÷��̾� �̵� ó��
     /// </summary>
-    private void Update()
+    private void FixedUpdate()
     {
         float moveHorizontal = 0;
         float moveVertical = 0;
