@@ -10,22 +10,23 @@ public class PlayerAttack : MonoBehaviour
 
     private Dictionary<string, KeyCode> keyMappings;
 
-    public float attackCooldown = 0.3f; // °ø°Ý ÄðÅ¸ÀÓ (NÃÊ)
-    public bool canAttack = true; // °ø°Ý °¡´É ¿©ºÎ
+    public float attackCooldown = 0.3f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ (Nï¿½ï¿½)
+    public bool canAttack = true; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void Start()
     {
         child = transform.GetChild(0);
         childObject = child.gameObject;
 
-        // °ø°Ý Å° ¸ÅÇÎ
+        // ï¿½ï¿½ï¿½ï¿½ Å° ï¿½ï¿½ï¿½ï¿½
         keyMappings = new Dictionary<string, KeyCode>()
         {
-            { "Player1", KeyCode.P },
-            { "Player2", KeyCode.L },
+            { "Player1", KeyCode.Return },
+            { "Player2", KeyCode.Space },
         };
 
-        // ÇÃ·¹ÀÌ¾î µ¥ÀÌÅÍ ÃÊ±âÈ­
-        for (int i = 0; i < 2; i++) {
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+        for (int i = 0; i < 2; i++)
+        {
             playerData[i] = new PlayerData(i + 1, $"Player{i + 1}");
             playerData[i].OnAttackCountIncrease.AddListener(count =>
             {
@@ -35,28 +36,28 @@ public class PlayerAttack : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾îÀÇ °ø°Ý ÀÔ·Â Ã³¸®
+    /// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ Ã³ï¿½ï¿½
     /// </summary>
     private void Update()
     {
         if (Input.GetKey(keyMappings[transform.name]) && canAttack)
         {
-            int playerIndex = transform.name.Equals("Player1") ? 0 : 1; // ÀÌ¸§¿¡ µû¶ó ÀÎµ¦½º °áÁ¤
+            int playerIndex = transform.name.Equals("Player1") ? 0 : 1; // ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             playerData[playerIndex].AttackCount++;
         }
     }
 
     /// <summary>
-    /// °ø°Ý ¹üÀ§¸¦ È°¼ºÈ­ÇÏ°í ÄðÅ¸ÀÓÀ» °ü¸®
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Ï°ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     /// <returns></returns>
     IEnumerator attackObject()
     {
-        canAttack = false; // °ø°Ý ºÒ°¡´É »óÅÂ·Î ¼³Á¤
-        childObject.SetActive(true); // °ø°Ý ¹üÀ§ È°¼ºÈ­
-        yield return new WaitForSeconds(0.1f); // Àá½Ã ´ë±â
-        childObject.SetActive(false); // °ø°Ý ¹üÀ§ ºñÈ°¼ºÈ­
-        yield return new WaitForSeconds(attackCooldown); // °ø°Ý ÄðÅ¸ÀÓ ´ë±â
-        canAttack = true; // °ø°Ý °¡´É »óÅÂ·Î ¼³Á¤
+        canAttack = false; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
+        childObject.SetActive(true); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
+        yield return new WaitForSeconds(0.1f); // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        childObject.SetActive(false); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+        yield return new WaitForSeconds(attackCooldown); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½
+        canAttack = true; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 }
