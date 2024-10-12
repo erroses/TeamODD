@@ -38,6 +38,9 @@ public class AudioManager : MonoBehaviour
         audioSource.loop = true; // 반복 재생 설정
         audioSource.volume = 0.5f;
         audioSource.Play(); // 지속적으로 재생
+
+        AudioPause(false);
+        Time.timeScale = 1f;
     }
 
     public void AudioPause(bool isPaused)

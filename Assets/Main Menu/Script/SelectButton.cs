@@ -4,13 +4,17 @@ using UnityEngine.SceneManagement;
 public class SelectButton : MonoBehaviour
 {
     public GameObject Option;
+    AudioManager audioManager;
     public void SelectStart()
     {
-        SceneManager.LoadScene("Internal");
+        SceneManager.LoadScene("GameTest");
     }
 
     public void SelectMain()
     {
+        audioManager = AudioManager.Instance;
+        audioManager.AudioPause(false);
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu");
     }
 

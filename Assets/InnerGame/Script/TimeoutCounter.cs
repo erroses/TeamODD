@@ -24,14 +24,17 @@ public class TimeoutCounter
 
     public UnityEvent OnTimerEnd { get; }
 
-    public IEnumerable StartCoroutine()
+    public IEnumerator StartCoroutine()
     {
         float elapsed = Timeout;
+        float sum = 0f;
         OnTimerStart.Invoke();
         while (elapsed >= 0)
         {
-            yield return new WaitForSeconds(Resolution);
+            sum += Resolution;
             elapsed -= Resolution;
+            yield return new WaitForSeconds(Resolution);
+            OnTimerElapsed.Invoke(sum);
         }
         OnTimerEnd.Invoke();
     }
