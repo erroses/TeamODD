@@ -18,20 +18,13 @@ public class JarState : MonoBehaviour
 
     private void Awake()
     {
-        // for (int i = 0; i < models.Length; i++)
-        // {
-        //     models[i] = transform.GetChild(i).gameObject;
-        // }
-        UpdateModel(currentHealth);
+        SetHealthPoint(maxHealth);
     }
 
     private void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.playOnAwake = false;
-
-        // currentHealth = maxHealth;
-        SetHealthPoint(maxHealth);
     }
 
     public void SetHealthPoint(int healthPoint)

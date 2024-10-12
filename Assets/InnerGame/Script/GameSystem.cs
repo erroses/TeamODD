@@ -26,6 +26,8 @@ public class GameSystem : MonoBehaviour, IGameSystem
     [SerializeField]
     private float regionRadius;
     [SerializeField]
+    private float playerRegionRadiusOffset;
+    [SerializeField]
     private float collisionRadius;
     [SerializeField]
     private GameObject[] jarObjects;
@@ -122,13 +124,26 @@ public class GameSystem : MonoBehaviour, IGameSystem
             Vector3 value = position.Value;
             value.y = 3.5f;
             jarObjects[i] = SpawnEntity(jarObjectPrefab, value, $"Jar-{i}");
+
+            if (i % 2 == 0)
+            {
+                GameObject o = jarObjects[i];
+                JarState jarState = o.GetComponent<JarState>();
+                jarState.SetHealthPoint(1);
+                o.name += "-broken";
+            }
         }
 
+        float playerMoveRegion = regionRadius + playerRegionRadiusOffset;
         Vector3 player1Position = positions[jarObjectCount].Value;
-        SpawnEntity(player1Prefab, player1Position, "Player1");
+        GameObject player1 = SpawnEntity(player1Prefab, player1Position, "Player1");
+        MovePlayer player1Move = player1.GetComponent<MovePlayer>();
+        player1Move.moveRegion = playerMoveRegion;
 
         Vector3 player2Position = positions[jarObjectCount + 1].Value;
-        SpawnEntity(player2Prefab, player2Position, "Player2");
+        GameObject player2 = SpawnEntity(player2Prefab, player2Position, "Player2");
+        MovePlayer player2Move = player2.GetComponent<MovePlayer>();
+        player2Move.moveRegion = playerMoveRegion;
     }
 
     private GameObject SpawnEntity(GameObject prefab, Vector3 position, string name)
