@@ -12,20 +12,21 @@ public class MovePlayer : MonoBehaviour
 
     public float power = 10000f;
     public float maxSpeed = 25.0f;
+    public float moveRegion = 100f;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
         child = transform.GetChild(0);
 
-        // Å° ¸ÅÇÎ
+        // Å° ï¿½ï¿½ï¿½ï¿½
         keyMappings = new Dictionary<string, KeyCode[]>()
         {
             { "Player1", new KeyCode[] { KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.UpArrow, KeyCode.DownArrow } },
             { "Player2", new KeyCode[] { KeyCode.A, KeyCode.D, KeyCode.W, KeyCode.S } }
         };
 
-        // °¢µµ ¸ÅÇÎ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         rotationMappings = new Dictionary<string, float>()
         {
             { "Player1", 90f },
@@ -33,7 +34,7 @@ public class MovePlayer : MonoBehaviour
         };
     }
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î ÀÌµ¿ Ã³¸®
+    /// ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ìµï¿½ Ã³ï¿½ï¿½
     /// </summary>
     private void Update()
     {
@@ -42,30 +43,35 @@ public class MovePlayer : MonoBehaviour
 
         KeyCode[] controls = keyMappings[transform.name];
 
-        // Å° ÀÔ·Â Ã³¸®
+        // Å° ï¿½Ô·ï¿½ Ã³ï¿½ï¿½
         if (Input.GetKey(controls[0])) { moveHorizontal = -1; }
         if (Input.GetKey(controls[1])) { moveHorizontal = 1; }
         if (Input.GetKey(controls[2])) { moveVertical = 1; }
         if (Input.GetKey(controls[3])) { moveVertical = -1; }
 
-        // ¹æÇâ º¤ÅÍ °è»ê
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical).normalized;
 
         if (movement != Vector3.zero)
         {
-            // ÀÌµ¿ ¹æÇâÀ» ±âÁØÀ¸·Î ºÎ¸ð ÃàÀ» µû¶ó È¸Àü
+            // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
             float rotationAngle = rotationMappings[transform.name];
-            Quaternion targetRotation = Quaternion.LookRotation(movement) * Quaternion.Euler(0, rotationAngle, 0); // ÀÌµ¿ ¹æÇâÀ¸·Î È¸Àü
+            Quaternion targetRotation = Quaternion.LookRotation(movement) * Quaternion.Euler(0, rotationAngle, 0); // ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
 
-            // ºÎ¸ðÀÇ YÃàÀ» ±âÁØÀ¸·Î È¸Àü Á¶Á¤
-            child.rotation = Quaternion.Slerp(child.rotation, targetRotation, Time.deltaTime * 10f); // ºÎµå·¯¿î È¸Àü
+            // ï¿½Î¸ï¿½ï¿½ï¿½ Yï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            child.rotation = Quaternion.Slerp(child.rotation, targetRotation, Time.deltaTime * 10f); // ï¿½Îµå·¯ï¿½ï¿½ È¸ï¿½ï¿½
         }
 
-        // ÈûÀ» Àû¿ë
-        rb.AddForce(movement * power * Time.deltaTime, ForceMode.Force);
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        rb.AddForce(power * Time.deltaTime * movement, ForceMode.Force);
 
-        // ÃÖ´ë ¼Óµµ Á¦ÇÑ
-        float slowdownRate = 0.97f; // °¨¼Ó ºñÀ²
+        if (rb.position.sqrMagnitude >= moveRegion * moveRegion)
+        {
+            rb.position = rb.position.normalized * moveRegion;
+        }
+
+        // ï¿½Ö´ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½
+        float slowdownRate = 0.97f; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (rb.velocity.magnitude > maxSpeed) { rb.velocity *= slowdownRate; }
     }
 }
