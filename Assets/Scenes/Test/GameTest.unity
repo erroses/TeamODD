@@ -1796,6 +1796,7 @@ MonoBehaviour:
   audioManager: {fileID: 0}
   jarObjectCount: 16
   regionRadius: 70
+  playerRegionRadiusOffset: 10
   collisionRadius: 20
   jarObjects: []
 --- !u!4 &2008842370 stripped
