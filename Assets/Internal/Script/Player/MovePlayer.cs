@@ -10,9 +10,18 @@ public class MovePlayer : MonoBehaviour
     private Dictionary<string, KeyCode[]> keyMappings;
     private Dictionary<string, float> rotationMappings;
 
-    public float power = 10000f;
+    public float power = 1000000f;
     public float maxSpeed = 25.0f;
     public float moveRegion = 100f;
+    public bool moveEnabled = false;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -33,13 +42,23 @@ public class MovePlayer : MonoBehaviour
             { "Player2", 270f }
         };
     }
+
+    private void Update()
+    {
+    }
+
     /// <summary>
     /// �÷��̾� �̵� ó��
     /// </summary>
     private void FixedUpdate()
     {
-        float moveHorizontal = 0;
-        float moveVertical = 0;
+        if (!moveEnabled)
+        {
+            return;
+        }
+
+        int moveHorizontal = 0;
+        int moveVertical = 0;
 
         KeyCode[] controls = keyMappings[transform.name];
 
@@ -49,20 +68,30 @@ public class MovePlayer : MonoBehaviour
         if (Input.GetKey(controls[2])) { moveVertical = 1; }
         if (Input.GetKey(controls[3])) { moveVertical = -1; }
 
-        // ���� ���� ���
+        int moveSide = moveVertical == 0 ? moveHorizontal : 0;
+        int moveFront = moveVertical;
+
+        animator.SetInteger("MoveSide", moveSide);
+        animator.SetInteger("MoveFront", moveFront);
+
+        if (moveSide < 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (moveSide > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical).normalized;
 
         if (movement != Vector3.zero)
         {
-            // �̵� ������ �������� �θ� ���� ���� ȸ��
             float rotationAngle = rotationMappings[transform.name];
             Quaternion targetRotation = Quaternion.LookRotation(movement) * Quaternion.Euler(0, rotationAngle, 0); // �̵� �������� ȸ��
-
-            // �θ��� Y���� �������� ȸ�� ����
             child.rotation = Quaternion.Slerp(child.rotation, targetRotation, Time.deltaTime * 10f); // �ε巯�� ȸ��
         }
 
-        // ���� ����
         rb.AddForce(power * Time.deltaTime * movement, ForceMode.Force);
 
         if (rb.position.sqrMagnitude >= moveRegion * moveRegion)
@@ -70,8 +99,7 @@ public class MovePlayer : MonoBehaviour
             rb.position = rb.position.normalized * moveRegion;
         }
 
-        // �ִ� �ӵ� ����
-        float slowdownRate = 0.97f; // ���� ����
+        float slowdownRate = 0.97f;
         if (rb.velocity.magnitude > maxSpeed) { rb.velocity *= slowdownRate; }
     }
 }

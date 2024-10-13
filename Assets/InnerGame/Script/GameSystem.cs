@@ -6,6 +6,8 @@ public delegate TimeoutCounter TimeoutCounterBuilder();
 
 public class GameSystem : MonoBehaviour, IGameSystem
 {
+    private readonly TimeoutCounter _startCounter;
+
     private Coroutine _timerCoroutine;
     private RandomEntityPlaceGenerator _entityPlaceGenerator;
 
@@ -15,6 +17,11 @@ public class GameSystem : MonoBehaviour, IGameSystem
     private GameObject player1Prefab;
     [SerializeField]
     private GameObject player2Prefab;
+
+    [SerializeField]
+    private GameObject player1Object;
+    [SerializeField]
+    private GameObject player2Object;
 
 
     [SerializeField]
@@ -35,6 +42,7 @@ public class GameSystem : MonoBehaviour, IGameSystem
     public GameSystem(TimeoutCounterBuilder builder)
     {
         TimeoutCounter = builder();
+        _startCounter = new TimeoutCounter(3, 1);
     }
 
     public GameSystem() : this(() => new TimeoutCounter(60f, 0.1f))
@@ -45,8 +53,9 @@ public class GameSystem : MonoBehaviour, IGameSystem
 
     public void Initialize()
     {
-        IEnumerator enumerator = TimeoutCounter.StartCoroutine();
-        _timerCoroutine = StartCoroutine(enumerator);
+        // IEnumerator enumerator = TimeoutCounter.StartCoroutine();
+        // _timerCoroutine = StartCoroutine(enumerator);
+        StartCoroutine(_startCounter.StartCoroutine());
     }
 
     public void Dispose()
@@ -81,8 +90,22 @@ public class GameSystem : MonoBehaviour, IGameSystem
         audioManager = FindObjectOfType<AudioManager>();
         _entityPlaceGenerator = new RandomEntityPlaceGenerator(regionRadius, collisionRadius);
 
+        _startCounter.OnTimerElapsed.AddListener(timeout =>
+        {
+            Debug.Log($"Ready Counter remained: {timeout}");
+        });
+        _startCounter.OnTimerEnd.AddListener(() =>
+        {
+            IEnumerator enumerator = TimeoutCounter.StartCoroutine();
+            _timerCoroutine = StartCoroutine(enumerator);
+        });
+
         TimeoutCounter.OnTimerStart.AddListener(() =>
         {
+            MovePlayer player1Move = player1Object.GetComponent<MovePlayer>();
+            player1Move.moveEnabled = true;
+            MovePlayer player2Move = player2Object.GetComponent<MovePlayer>();
+            player2Move.moveEnabled = true;
             Debug.Log("Timeout Counter started.");
         });
 
@@ -129,20 +152,30 @@ public class GameSystem : MonoBehaviour, IGameSystem
             {
                 GameObject o = jarObjects[i];
                 JarState jarState = o.GetComponent<JarState>();
-                jarState.SetHealthPoint(1);
+                jarState.SetHealthPoint(2);
                 o.name += "-broken";
+                jarState.jarObjectData = new JarObjectData(i, o.name, jarState.maxHealth);
+                jarState.jarObjectData.OnHealthPointChange.AddListener((prev, next) =>
+                {
+                    if (next == 0)
+                    {
+                        jarObjects[i] = null;
+                    }
+                });
             }
         }
 
         float playerMoveRegion = regionRadius + playerRegionRadiusOffset;
         Vector3 player1Position = positions[jarObjectCount].Value;
-        GameObject player1 = SpawnEntity(player1Prefab, player1Position, "Player1");
-        MovePlayer player1Move = player1.GetComponent<MovePlayer>();
+        player1Object = SpawnEntity(player1Prefab, player1Position, "Player1");
+        MovePlayer player1Move = player1Object.GetComponent<MovePlayer>();
+        player1Move.moveEnabled = false;
         player1Move.moveRegion = playerMoveRegion;
 
         Vector3 player2Position = positions[jarObjectCount + 1].Value;
-        GameObject player2 = SpawnEntity(player2Prefab, player2Position, "Player2");
-        MovePlayer player2Move = player2.GetComponent<MovePlayer>();
+        player2Object = SpawnEntity(player2Prefab, player2Position, "Player2");
+        MovePlayer player2Move = player2Object.GetComponent<MovePlayer>();
+        player2Move.moveEnabled = false;
         player2Move.moveRegion = playerMoveRegion;
     }
 
