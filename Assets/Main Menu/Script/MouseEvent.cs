@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MouseEvent : MonoBehaviour
@@ -9,6 +10,7 @@ public class MouseEvent : MonoBehaviour
     GameObject[] childObject = new GameObject[5];
     public GameObject Option;
     public GameObject MainMenu;
+    public Slider volumeSlider;
 
     private void Start()
     {
@@ -45,7 +47,13 @@ public class MouseEvent : MonoBehaviour
 
     void OnMouseDown()
     {
-        switch(this.name)
+        childObject[0].SetActive(true);
+        for (int i = 1; i < 5; i++)
+        {
+            childObject[i].SetActive(false);
+        }
+
+        switch (this.name)
         {
             case "StartButton": SelectStart(); break;
             case "OptionButton": SelectOption(); break;
@@ -60,8 +68,10 @@ public class MouseEvent : MonoBehaviour
 
     public void SelectOption()
     {
+
         MainMenu.SetActive(false);
         Option.SetActive(true);
+        volumeSlider.gameObject.SetActive(true);
     }
 
     public void SelectExit()

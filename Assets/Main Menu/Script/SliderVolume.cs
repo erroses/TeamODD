@@ -9,7 +9,7 @@ public class SliderVolume : MonoBehaviour
     {
         // AudioManager의 싱글톤 인스턴스를 가져와서 초기 설정
 
-        volumeSlider.value = AudioManager.Instance.audioSource.volume;
+        volumeSlider.value = 0.5f;
         volumeSlider.onValueChanged.AddListener(AudioManager.Instance.SetVolume);
     }
 }
