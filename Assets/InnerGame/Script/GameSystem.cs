@@ -39,6 +39,8 @@ public class GameSystem : MonoBehaviour, IGameSystem
     private float collisionRadius;
     [SerializeField]
     private GameObject[] jarObjects;
+    [SerializeField]
+    private int[] jarObjectOwners;
 
     [SerializeField]
     private ReadyPanel readyPanel;
@@ -93,6 +95,7 @@ public class GameSystem : MonoBehaviour, IGameSystem
         }
 
         jarObjects = new GameObject[jarObjectCount];
+        jarObjectOwners = new int[jarObjectCount];
         audioManager = FindObjectOfType<AudioManager>();
         _entityPlaceGenerator = new RandomEntityPlaceGenerator(regionRadius, collisionRadius);
 
@@ -179,17 +182,19 @@ public class GameSystem : MonoBehaviour, IGameSystem
             jarState.jarObjectData = new JarObjectData(i, jarObject.name, i % 2 == 0 ? 0 : jarState.maxHealth);
             jarState.jarObjectData.OnHealthPointChange.AddListener((prev, next) =>
             {
-                if (next == 0)
+                if (next == 0 && jarObjectOwners[jarState.jarObjectData.Id] == 0)
                 {
                     GameStatistics.Instance.Player1JarAttackCount--;
                     GameStatistics.Instance.Player2JarAttackCount++;
+                    jarObjectOwners[jarState.jarObjectData.Id] = 1;
                     Debug.Log("Player2 destroyed a jar.");
                     Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
                 }
-                if (next == 3)
+                if (next == 3 && jarObjectOwners[jarState.jarObjectData.Id] == 1)
                 {
                     GameStatistics.Instance.Player1JarAttackCount++;
                     GameStatistics.Instance.Player2JarAttackCount--;
+                    jarObjectOwners[jarState.jarObjectData.Id] = 0;
                     Debug.Log("Player1 restored a jar.");
                     Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
                 }
@@ -199,11 +204,13 @@ public class GameSystem : MonoBehaviour, IGameSystem
                 jarState.SetHealthPoint(0, true);
                 jarObject.name += "-broken";
                 GameStatistics.Instance.Player2JarAttackCount++;
+                jarObjectOwners[jarState.jarObjectData.Id] = 1;
                 Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
             }
             else
             {
                 GameStatistics.Instance.Player1JarAttackCount++;
+                jarObjectOwners[jarState.jarObjectData.Id] = 0;
                 Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
             }
         }
