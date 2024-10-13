@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class JarState : MonoBehaviour
@@ -10,14 +11,18 @@ public class JarState : MonoBehaviour
     public AudioClip jarRepair; // ����� ����� Ŭ��: �׾Ƹ� ����
     public AudioClip jarDamage; // ����� ����� Ŭ��: �׾Ƹ� �ջ�
     public AudioClip jarCrash; // ����� ����� Ŭ��: �׾Ƹ� �ļ�
+    public Animator animator;
 
     public int maxHealth = 3;
     public int currentHealth;
 
     public int health;
+    public bool pendingDestroy = false;
+    public JarObjectData jarObjectData;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         SetHealthPoint(maxHealth);
     }
 
@@ -29,8 +34,17 @@ public class JarState : MonoBehaviour
 
     public void SetHealthPoint(int healthPoint)
     {
+        if (pendingDestroy)
+        {
+            return;
+        }
         currentHealth = healthPoint;
         UpdateModel(healthPoint);
+        if (currentHealth == 0)
+        {
+            pendingDestroy = true;
+            FadeOut();
+        }
     }
 
     public void UpdateModel(int healthPoint)
@@ -61,5 +75,17 @@ public class JarState : MonoBehaviour
         if (isRepair) { audioSource.clip = jarRepair; }
 
         audioSource.Play();
+        animator.SetTrigger(isRepair ? "HealTrigger" : "AttackTrigger");
+    }
+
+    private void FadeOut()
+    {
+        StartCoroutine(FadeOutAnimationCoroutine());
+    }
+
+    private IEnumerator FadeOutAnimationCoroutine()
+    {
+        yield return new WaitForSeconds(1.2f);
+        Destroy(gameObject);
     }
 }
