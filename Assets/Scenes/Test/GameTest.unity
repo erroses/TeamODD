@@ -710,8 +710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33465e6ea0cd6b1408830559d742f15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPaused: 0
-  Panel: {fileID: 0}
 --- !u!1001 &237482040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2362,7 +2360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfc7543f8043774e813e27d07fad5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   clip: {fileID: 8300000, guid: e1df620917a808542b65fdc43a9bf181, type: 3}
 --- !u!4 &1588895157 stripped
 Transform:
@@ -3375,4 +3372,3 @@ SceneRoots:
   - {fileID: 394104647}
   - {fileID: 1221018618}
   - {fileID: 508066396}
-  - {fileID: 47436436}
