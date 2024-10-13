@@ -176,7 +176,7 @@ public class GameSystem : MonoBehaviour, IGameSystem
             GameObject jarObject = SpawnEntity(jarObjectPrefab, value, $"Jar-{i}");
             JarState jarState = jarObject.GetComponent<JarState>();
             jarObjects[i] = jarObject;
-            jarState.jarObjectData = new JarObjectData(i, jarObject.name, jarState.maxHealth);
+            jarState.jarObjectData = new JarObjectData(i, jarObject.name, i % 2 == 0 ? 0 : jarState.maxHealth);
             jarState.jarObjectData.OnHealthPointChange.AddListener((prev, next) =>
             {
                 if (next == 0)
@@ -184,23 +184,27 @@ public class GameSystem : MonoBehaviour, IGameSystem
                     GameStatistics.Instance.Player1JarAttackCount--;
                     GameStatistics.Instance.Player2JarAttackCount++;
                     Debug.Log("Player2 destroyed a jar.");
+                    Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
                 }
                 if (next == 3)
                 {
                     GameStatistics.Instance.Player1JarAttackCount++;
                     GameStatistics.Instance.Player2JarAttackCount--;
                     Debug.Log("Player1 restored a jar.");
+                    Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
                 }
             });
             if (i % 2 == 0)
             {
-                jarState.SetHealthPoint(0);
+                jarState.SetHealthPoint(0, true);
                 jarObject.name += "-broken";
                 GameStatistics.Instance.Player2JarAttackCount++;
+                Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
             }
             else
             {
                 GameStatistics.Instance.Player1JarAttackCount++;
+                Debug.Log($"Player1: Player2 = {GameStatistics.Instance.Player1JarAttackCount}:{GameStatistics.Instance.Player2JarAttackCount}");
             }
         }
 
