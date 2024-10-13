@@ -44,11 +44,6 @@ public class JarState : MonoBehaviour
             jarObjectData.HealthPoint = currentHealth;
         }
         UpdateModel(healthPoint);
-        if (currentHealth == 0)
-        {
-            pendingDestroy = true;
-            FadeOut();
-        }
     }
 
     public void UpdateModel(int healthPoint)
