@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public delegate TimeoutCounter TimeoutCounterBuilder();
 
@@ -45,7 +46,7 @@ public class GameSystem : MonoBehaviour, IGameSystem
         _startCounter = new TimeoutCounter(3, 1);
     }
 
-    public GameSystem() : this(() => new TimeoutCounter(60f, 0.1f))
+    public GameSystem() : this(() => new TimeoutCounter(30f, 0.1f))
     {
     }
 
@@ -111,17 +112,23 @@ public class GameSystem : MonoBehaviour, IGameSystem
 
         TimeoutCounter.OnTimerElapsed.AddListener(timeout =>
         {
-            Debug.Log($"Timeout Counter remained: {timeout}");
+            // Debug.Log($"Timeout Counter remained: {timeout}");
         });
 
         TimeoutCounter.OnTimerEnd.AddListener(() =>
         {
             Debug.Log("Timeout Counter finished.");
+            Debug.Log($"Player1 Attack Count: {GameStatistics.Instance.Player1AttackCount}");
+            Debug.Log($"Player1 Jar Attack Count: {GameStatistics.Instance.Player1JarAttackCount}");
+            Debug.Log($"Player2 Attack Count: {GameStatistics.Instance.Player2AttackCount}");
+            Debug.Log($"Player2 Jar Attack Count: {GameStatistics.Instance.Player2JarAttackCount}");
+            SceneManager.LoadScene("Ending");
         });
     }
 
     private void Start()
     {
+        GameStatistics.Instance.Initialize();
         Initialize();
         SpawnEntities();
     }
@@ -146,22 +153,25 @@ public class GameSystem : MonoBehaviour, IGameSystem
             }
             Vector3 value = position.Value;
             value.y = 3.5f;
-            jarObjects[i] = SpawnEntity(jarObjectPrefab, value, $"Jar-{i}");
-
+            GameObject jarObject = SpawnEntity(jarObjectPrefab, value, $"Jar-{i}");
+            JarState jarState = jarObject.GetComponent<JarState>();
+            jarObjects[i] = jarObject;
+            GameStatistics.Instance.Player1JarAttackCount++;
+            jarState.jarObjectData = new JarObjectData(i, jarObject.name, jarState.maxHealth);
+            jarState.jarObjectData.OnHealthPointChange.AddListener((prev, next) =>
+            {
+                if (next == 0)
+                {
+                    GameStatistics.Instance.Player1JarAttackCount--;
+                    GameStatistics.Instance.Player2JarAttackCount++;
+                    jarObjects[jarState.jarObjectData.Id] = null;
+                    Debug.Log("Player2 destroyed a jar.");
+                }
+            });
             if (i % 2 == 0)
             {
-                GameObject o = jarObjects[i];
-                JarState jarState = o.GetComponent<JarState>();
                 jarState.SetHealthPoint(2);
-                o.name += "-broken";
-                jarState.jarObjectData = new JarObjectData(i, o.name, jarState.maxHealth);
-                jarState.jarObjectData.OnHealthPointChange.AddListener((prev, next) =>
-                {
-                    if (next == 0)
-                    {
-                        jarObjects[i] = null;
-                    }
-                });
+                jarObject.name += "-broken";
             }
         }
 

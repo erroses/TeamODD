@@ -52,6 +52,15 @@ public class AttackCollision : MonoBehaviour
         {
             PlayerSound playerSound = other.gameObject.GetComponent<PlayerSound>();
             playerSound.audioSound();
+            bool isPlayer1 = parent.name.Equals("Player1");
+            if (isPlayer1)
+            {
+                GameStatistics.Instance.Player1AttackCount++;
+            }
+            else
+            {
+                GameStatistics.Instance.Player2AttackCount++;
+            }
         }
 
         // 항아리와 부딪혔을 경우

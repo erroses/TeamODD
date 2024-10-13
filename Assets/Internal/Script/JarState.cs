@@ -23,7 +23,7 @@ public class JarState : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        SetHealthPoint(maxHealth);
+        SetHealthPoint(maxHealth, true);
     }
 
     private void Start()
@@ -32,13 +32,17 @@ public class JarState : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
-    public void SetHealthPoint(int healthPoint)
+    public void SetHealthPoint(int healthPoint, bool init = false)
     {
         if (pendingDestroy)
         {
             return;
         }
         currentHealth = healthPoint;
+        if (!init)
+        {
+            jarObjectData.HealthPoint = currentHealth;
+        }
         UpdateModel(healthPoint);
         if (currentHealth == 0)
         {
