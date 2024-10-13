@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SelectButton : MonoBehaviour
 {
-    public GameObject Option;
     AudioManager audioManager;
     public void SelectStart()
     {
@@ -16,16 +15,6 @@ public class SelectButton : MonoBehaviour
         audioManager.AudioPause(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene("Main Menu");
-    }
-
-    public void SelectOption()
-    {
-        Option.SetActive(true);
-    }
-
-    public void SelectBack()
-    {
-        Option.SetActive(false);
     }
 
     public void SelectExit()
