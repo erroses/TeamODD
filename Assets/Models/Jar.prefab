@@ -89,6 +89,7 @@ MonoBehaviour:
   jarRepair: {fileID: 8300000, guid: 07860e191c7c55149ad9d5a23f4633b1, type: 3}
   jarDamage: {fileID: 8300000, guid: 1092ab8bdb877e949a52d545e6070d36, type: 3}
   jarCrash: {fileID: 8300000, guid: 832d7d595f7bb1b468c12514c897a759, type: 3}
+  animator: {fileID: 0}
   maxHealth: 3
   currentHealth: 0
   health: 0
