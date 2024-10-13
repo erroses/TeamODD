@@ -8,6 +8,7 @@ public class MouseEvent : MonoBehaviour
     Transform[] child = new Transform[5];
     GameObject[] childObject = new GameObject[5];
     public GameObject Option;
+    public GameObject MainMenu;
 
     private void Start()
     {
@@ -59,6 +60,7 @@ public class MouseEvent : MonoBehaviour
 
     public void SelectOption()
     {
+        MainMenu.SetActive(false);
         Option.SetActive(true);
     }
 
