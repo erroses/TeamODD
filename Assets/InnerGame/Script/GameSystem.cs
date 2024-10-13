@@ -152,8 +152,16 @@ public class GameSystem : MonoBehaviour, IGameSystem
             {
                 GameObject o = jarObjects[i];
                 JarState jarState = o.GetComponent<JarState>();
-                jarState.SetHealthPoint(1);
+                jarState.SetHealthPoint(2);
                 o.name += "-broken";
+                jarState.jarObjectData = new JarObjectData(i, o.name, jarState.maxHealth);
+                jarState.jarObjectData.OnHealthPointChange.AddListener((prev, next) =>
+                {
+                    if (next == 0)
+                    {
+                        jarObjects[i] = null;
+                    }
+                });
             }
         }
 

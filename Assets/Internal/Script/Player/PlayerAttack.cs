@@ -12,6 +12,13 @@ public class PlayerAttack : MonoBehaviour
 
     public float attackCooldown = 0.3f; // ���� ��Ÿ�� (N��)
     public bool canAttack = true; // ���� ���� ����
+    public Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     private void Start()
     {
         child = transform.GetChild(0);
@@ -44,6 +51,7 @@ public class PlayerAttack : MonoBehaviour
         {
             int playerIndex = transform.name.Equals("Player1") ? 0 : 1; // �̸��� ���� �ε��� ����
             playerData[playerIndex].AttackCount++;
+            animator.SetTrigger("AttackTrigger");
         }
     }
 
