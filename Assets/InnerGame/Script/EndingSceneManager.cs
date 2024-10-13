@@ -12,6 +12,10 @@ public class EndingSceneManager : MonoBehaviour
     [SerializeField]
     private Image image;
     [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip audioClip;
+    [SerializeField]
     private Button retryButton;
     [SerializeField]
     private Button quitButton;
@@ -40,8 +44,9 @@ public class EndingSceneManager : MonoBehaviour
         });
         quitButton.onClick.AddListener(() =>
         {
-            // TODO: load main scene
+            SceneManager.LoadScene("Main Menu");
         });
+        audioSource.volume = 0.4f;
     }
 
     private void Start()
@@ -51,7 +56,21 @@ public class EndingSceneManager : MonoBehaviour
         image.sprite = endingSceneBackgroundSprites[playerIndex];
         for (int i = 0; i < playerDiagnostics.Length; i++)
         {
-            playerDiagnostics[i].gameObject.SetActive(i == playerIndex);
+            bool isWinner = i == playerIndex;
+            playerDiagnostics[i].gameObject.SetActive(isWinner);
+            if (isWinner)
+            {
+                playerDiagnostics[i].OnDialogDisplay.AddListener(() =>
+                {
+                    Debug.Log("Play sound.");
+                    audioSource.PlayOneShot(audioClip);
+                });
+            }
         }
+    }
+
+    private void PlayEffectSound()
+    {
+        audioSource.PlayOneShot(audioClip);
     }
 }

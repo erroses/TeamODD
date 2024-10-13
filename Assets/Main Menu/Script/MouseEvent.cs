@@ -16,13 +16,14 @@ public class MouseEvent : MonoBehaviour
     {
         Transform firstChild = transform.GetChild(0);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++)
+        {
             child[i] = firstChild.GetChild(i);
             childObject[i] = child[i].gameObject;
         }
     }
 
-    // ¸¶¿ì½º°¡ ¿ÀºêÁ§Æ®¿¡ µé¾î¿ÔÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
     void OnMouseOver()
     {
         child[0].gameObject.SetActive(false);
@@ -34,7 +35,7 @@ public class MouseEvent : MonoBehaviour
         }
     }
 
-    // ¸¶¿ì½º°¡ ¿ÀºêÁ§Æ®¿¡¼­ ³ª°¬À» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
     void OnMouseExit()
     {
         childObject[0].SetActive(true);
@@ -42,7 +43,7 @@ public class MouseEvent : MonoBehaviour
         {
             childObject[i].SetActive(false);
         }
-        // ¿©±â¼­ ¿øÇÏ´Â ÀÌº¥Æ®¸¦ Ã³¸®ÇÕ´Ï´Ù.
+        // ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
     }
 
     void OnMouseDown()
@@ -63,7 +64,7 @@ public class MouseEvent : MonoBehaviour
 
     public void SelectStart()
     {
-        SceneManager.LoadScene("GameTest");
+        SceneManager.LoadScene("Introduction");
     }
 
     public void SelectOption()
@@ -76,11 +77,11 @@ public class MouseEvent : MonoBehaviour
 
     public void SelectExit()
     {
-        // ¿¡µðÅÍ¿¡¼­ ½ÇÇà ÁßÀÎÁö È®ÀÎ (¿¡µðÅÍ¿¡¼­´Â Á¾·áµÇÁö ¾Ê±â ¶§¹®¿¡ ¸Þ½ÃÁö¸¦ ¶ç¿ò)
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit(); // ½ÇÁ¦ ºôµåµÈ °ÔÀÓ¿¡¼­ ½ÇÇà ½Ã °ÔÀÓÀ» Á¾·á
+        Application.Quit(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 #endif
     }
 }

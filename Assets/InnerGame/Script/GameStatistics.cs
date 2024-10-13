@@ -5,14 +5,6 @@ public class GameStatistics : MonoBehaviour
 {
     private static GameObject _instance;
     private static GameStatistics _statistics;
-    [SerializeField]
-    private int _player2AttackCount;
-
-    [SerializeField]
-    private int _player1JarAttackCount;
-
-    [SerializeField]
-    private int _player2JarAttackCount;
 
 
     [RuntimeInitializeOnLoadMethod]
