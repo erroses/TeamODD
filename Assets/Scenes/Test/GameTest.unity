@@ -710,6 +710,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33465e6ea0cd6b1408830559d742f15d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPaused: 0
+  Panel: {fileID: 0}
 --- !u!1001 &237482040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2360,6 +2362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dfc7543f8043774e813e27d07fad5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   clip: {fileID: 8300000, guid: e1df620917a808542b65fdc43a9bf181, type: 3}
 --- !u!4 &1588895157 stripped
 Transform:
@@ -2964,6 +2967,7 @@ GameObject:
   - component: {fileID: 2124458078}
   - component: {fileID: 2124458080}
   - component: {fileID: 2124458079}
+  - component: {fileID: 2124458081}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3045,6 +3049,39 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &2124458081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124458077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78da3f00f3328541b4526c0b0b5ec5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineThickness: 1.25
+  lineIntensity: 0.5
+  fillAmount: 0.2
+  lineColor0: {r: 1, g: 0, b: 0, a: 1}
+  lineColor1: {r: 1, g: 1, b: 0, a: 1}
+  lineColor2: {r: 0, g: 1, b: 0, a: 1}
+  additiveRendering: 0
+  backfaceCulling: 1
+  fillColor: {r: 0, g: 0, b: 1, a: 1}
+  useFillColor: 0
+  cornerOutlines: 0
+  addLinesBetweenColors: 0
+  scaleWithScreenSize: 1
+  alphaCutoff: 0.5
+  flipY: 0
+  sourceCamera: {fileID: 0}
+  autoEnableOutlines: 0
+  outlineCamera: {fileID: 0}
+  outlineShaderMaterial: {fileID: 0}
+  renderTexture: {fileID: 0}
+  extraRenderTexture: {fileID: 0}
 --- !u!1001 &2135372276
 PrefabInstance:
   m_ObjectHideFlags: 0
