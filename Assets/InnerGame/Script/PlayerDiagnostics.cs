@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerDiagnostics : MonoBehaviour
 {
@@ -14,12 +15,15 @@ public class PlayerDiagnostics : MonoBehaviour
     [SerializeField]
     private TextSpan[] _textSpans;
 
+    public UnityEvent OnDialogDisplay { get; private set; }
+
     private void Awake()
     {
         foreach (TextSpan textSpan in _textSpans)
         {
             textSpan.gameObject.SetActive(false);
         }
+        OnDialogDisplay = new UnityEvent();
     }
 
     private void Start()
@@ -36,10 +40,11 @@ public class PlayerDiagnostics : MonoBehaviour
     {
         for (int i = 0; i < _textSpans.Length; i++)
         {
+            yield return new WaitForSeconds(delay);
             TextSpan textSpan = _textSpans[i];
             textSpan.SetValue(DiagnosticValueGenerator[i]().ToString());
             textSpan.gameObject.SetActive(true);
-            yield return new WaitForSeconds(delay);
+            OnDialogDisplay.Invoke();
         }
     }
 }
