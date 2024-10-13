@@ -15,8 +15,8 @@ public class IngameOption : MonoBehaviour
         volumeSlider.gameObject.SetActive(false);
         switch (this.name)
         {
-            case "³ª°¡±â": GameExit(); break;
-            case "Á¦ÀÛ": Creator(); break;
+            case "ë‚˜ê°€ê¸°": GameExit(); break;
+            case "ì œìž‘": Creator(); break;
         }
     }
 
