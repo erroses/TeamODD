@@ -44,7 +44,7 @@ public class EndingSceneManager : MonoBehaviour
         });
         quitButton.onClick.AddListener(() =>
         {
-            // TODO: load main scene
+            SceneManager.LoadScene("Main Menu");
         });
         audioSource.volume = 0.4f;
     }
