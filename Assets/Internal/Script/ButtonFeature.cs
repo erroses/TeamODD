@@ -6,7 +6,7 @@ public class ButtonFeature : MonoBehaviour
 {
     public GameObject Option;
     public GameObject Normal;
-    OpenOption openOption;
+    public GameObject Background;
 
     public void CloseOption()
     {
@@ -17,6 +17,6 @@ public class ButtonFeature : MonoBehaviour
     public void OpenOption()
     {
         Option.SetActive(true);
-        Normal.SetActive(false);
+        Background.SetActive(false);
     }
 }
