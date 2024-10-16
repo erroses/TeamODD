@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using GameJam.Project;
+
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SelectButton : MonoBehaviour

@@ -1,13 +1,15 @@
+using GameJam.Project;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SliderVolume : MonoBehaviour
 {
-    public Slider volumeSlider; // Inspector¿¡¼­ ÇÒ´ç
+    public Slider volumeSlider; // Inspectorï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½
 
     void Start()
     {
-        // AudioManagerÀÇ ½Ì±ÛÅæ ÀÎ½ºÅÏ½º¸¦ °¡Á®¿Í¼­ ÃÊ±â ¼³Á¤
+        // AudioManagerï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         volumeSlider.value = AudioManager.Instance.audioSource.volume;
         volumeSlider.onValueChanged.AddListener(AudioManager.Instance.SetVolume);

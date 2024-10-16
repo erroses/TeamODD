@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+
+using GameJam.Project;
+
 using UnityEngine;
 
 public class BackgroundMusicManager : MonoBehaviour
@@ -16,8 +19,8 @@ public class BackgroundMusicManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // ½Ã°£ ½ºÄÉÀÏ°ú ¿Àµð¿À ÇÇÄ¡¸¦ ÀÏ½ÃÁ¤Áö »óÅÂ¿¡ µû¶ó ¼³Á¤
-            audioManager.AudioPause(isPaused); // ¹è°æÀ½¾Ç ¸ØÃã ¶Ç´Â Àç°³
+            // ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            audioManager.AudioPause(isPaused); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ç°³
             isPaused = !isPaused;
         }
     }
