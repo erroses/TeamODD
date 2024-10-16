@@ -1926,6 +1926,7 @@ MonoBehaviour:
   focusText: {fileID: 640670828}
   clickBackground: {fileID: 1590178367}
   clickText: {fileID: 1354085381}
+  button: {fileID: 0}
 --- !u!50 &1720736365
 Rigidbody2D:
   serializedVersion: 4
@@ -2286,6 +2287,7 @@ MonoBehaviour:
   focusText: {fileID: 857248896}
   clickBackground: {fileID: 781302580}
   clickText: {fileID: 2103883832}
+  button: {fileID: 0}
 --- !u!50 &1980414056
 Rigidbody2D:
   serializedVersion: 4
@@ -2935,7 +2937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &267525800382190604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3977,6 +3979,7 @@ MonoBehaviour:
   focusText: {fileID: 5766518395781707868}
   clickBackground: {fileID: 4000909342505268252}
   clickText: {fileID: 3644988460404025825}
+  button: {fileID: 0}
 --- !u!50 &8216418741278743863
 Rigidbody2D:
   serializedVersion: 4
